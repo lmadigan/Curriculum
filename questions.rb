@@ -40,6 +40,14 @@ class Question
     question.map { |q| Question.new(q) }
   end
 
+  def self.most_followed(n)
+    QuestionFollows.most_followed_questions(1)
+  end
+
+  def self.most_liked(n)
+    QuestionLike.most_liked_questions(n)
+  end
+
   def initialize(options)
     @id = options['id']
     @title = options['title']
@@ -70,4 +78,12 @@ class Question
     QuestionFollow.followers_for_question_id(self.id)
   end
 
+  def likers
+    QuestionLike.likers_for_question_id(self.id)
+  end
+
+  def num_likes
+    return 0 if likers.nil?
+    likers.count
+  end
 end
